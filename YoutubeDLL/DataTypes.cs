@@ -65,6 +65,7 @@ namespace YoutubeDLL
             set { playlistId = value; }
         }
 
+        [JsonIgnore]
         public YTVidList items
         {
             get { return internalVideos; }

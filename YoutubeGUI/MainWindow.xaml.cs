@@ -4,8 +4,6 @@ using YoutubeDLL;
 using System.Windows.Controls;
 using System.ComponentModel;
 using System;
-using System.Linq;
-using System.IO;
 
 namespace YoutubeGUIWPF
 {
