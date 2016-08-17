@@ -1,0 +1,126 @@
+﻿<Window x:Class="YoutubeGUIWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:YoutubeGUIWPF"
+        mc:Ignorable="d"
+        Title="youtube PlayList Storage" Height="900" Width="1800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle Grid.Row="0" Fill="DarkRed"/>
+
+        <DockPanel Grid.Row="0">
+            <Image
+                Source="resources/YoutubeLogo.png"/>
+            <TextBlock 
+                DockPanel.Dock="Left"
+                Text="Youtube Playlist storage" 
+                FontSize="20" 
+                VerticalAlignment="Center" 
+                FontWeight="Bold" 
+                Foreground="White" 
+                Margin="10,0,0,0">
+            </TextBlock>
+        </DockPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" MinWidth="175"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <DockPanel Grid.Column="0">
+                <TextBlock DockPanel.Dock="Top" Text="stored playlists" Margin="10" FontSize="16" FontWeight="Bold" />
+
+                <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0,0,10">
+                    <ListView x:Name="PlaylistView" Height="auto" Background="LightGray" Width="auto" SelectionMode="Single" MouseDoubleClick="PlayListDoubleClick">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <WrapPanel>
+                                    <TextBlock Text="{Binding Title}" FontSize="16"/>
+                                </WrapPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </DockPanel>
+            </DockPanel>
+
+            <Grid Grid.Column="1">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0" Grid.Column="0">
+                    <TextBlock DockPanel.Dock="Top" Text="Playlist on Youtube" FontSize="16" FontWeight="Bold" Margin="10,10,10,0"/>
+
+                    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <ListView x:Name="UpdateListView" DockPanel.Dock="Top" Background="LightGray" Margin="10">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <WrapPanel>
+                                        <TextBlock Text="Title: " FontSize="16" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Title}" FontSize="16"/>
+                                    </WrapPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </DockPanel>
+                    
+                </DockPanel>
+
+                <DockPanel Grid.Row="0" Grid.Column="1">
+                    <TextBlock DockPanel.Dock="Top" Text="Playlist on Computer" FontSize="16" FontWeight="Bold" Margin="10,10,10,0"/>
+
+                    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <ListView x:Name="LocalListView" Grid.Column="1" Background="LightGray" Margin="0,10,10,10">
+
+                            <ListView.Style>
+                                <Style TargetType="ListView">
+                                    <Style.Triggers>
+                                        <Trigger Property="HasItems" Value="false">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListView">
+                                                        <Border BorderThickness="1" BorderBrush="Gray">
+                                                            <TextBlock Text="no items..." TextAlignment="Center" FontSize="20" Foreground="#FF615959" Background="LightGray"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListView.Style>
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <WrapPanel>
+                                        <TextBlock Text="Title: " FontSize="16" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Title}" FontSize="16"/>
+                                    </WrapPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </DockPanel>
+                </DockPanel>
+
+                <ProgressBar x:Name="prgDownload" Grid.Row="1" Grid.ColumnSpan="2" Height="45" Margin="10,0,10,10" IsIndeterminate="False"/>
+
+            </Grid>
+            
+        </Grid>
+
+    </Grid>
+</Window>

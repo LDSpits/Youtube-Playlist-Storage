@@ -1,0 +1,15 @@
+1: login
+1.1: de applicatie authenticeerd de gebruiker
+1.2: na een succesvolle authenticatie wordt de lijst van playlists getoond
+
+2: playlists
+2.1: de applicatie toont een lijst van playlists als een lijst van (playlist)titels
+2.2: de applicatie selecteert bij het opstarten een playlist
+2.3: de geslecteerde playlist is (optioneel) de eerste danwel de meest recente
+2.4: de applicatie toont eerst de lokaal opgeslagen lijst van playlists
+2.5: de applicatie start een updateproces voor de playlists
+
+3: videos
+3.1: de applicatie toont de lokaal opgeslagen videos van de geselecteerde playlist
+3.2: de applicatie start een updateproces voor de videos
+3.3: de gebruiker kan aangeven of
