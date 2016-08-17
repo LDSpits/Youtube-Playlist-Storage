@@ -25,8 +25,6 @@ namespace YoutubeDLL
             {
                 throw new ArgumentNullException("the playlist provided does not have a list of videos");
             }
-
-            
         }
 
         public static YTVidList LoadData(string playlistId)
@@ -56,6 +54,8 @@ namespace YoutubeDLL
                 Directory.CreateDirectory(DataPath);
             }
             return Path.Combine(DataPath, PlayListId + ".lst");
+
+            
         }
     }
 }
