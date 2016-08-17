@@ -115,10 +115,6 @@
     <Resource Include="resources\YoutubeLogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\YoutubeDatabase\YoutubeDatabase.sqlproj">
-      <Project>{5cccdbb6-6275-4201-bdd6-7aef962250bb}</Project>
-      <Name>YoutubeDatabase</Name>
-    </ProjectReference>
     <ProjectReference Include="..\YoutubeDLL\YoutubeDLL.csproj">
       <Project>{192d0637-f58e-46e8-b353-712dd04307a3}</Project>
       <Name>YoutubeDLL</Name>
