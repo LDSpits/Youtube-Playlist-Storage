@@ -15,10 +15,46 @@ namespace YoutubeGUIWPF
         public MainWindow()
         {
             InitializeComponent();
-
             AsyncWorker.DoWork(Worker_DoWork,Worker_onComplete);
+            PlaylistView.Focus();
         }
+        
+
+        private void PlayListDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            YTPlaylist selected = (YTPlaylist)PlaylistView.SelectedItem;
+
+            AsyncWorker.DoWork(Videoworker_DoWork, Videoworker_onComplete, selected.Id);
+            AsyncWorker.DoWork(Dataworker_DoWork, Dataworker_onComplete, selected.Id);
+        }
+
+        private void CreateLocal_Click(object sender, MouseButtonEventArgs e)
+        {
+            YTPlaylist selected = (YTPlaylist)PlaylistView.SelectedItem;
+            AsyncWorker.DoWork(Storeworker_doWork, Storeworker_onComplete, selected);
+        }
+
         #region workermethods
+
+        private void Storeworker_doWork(object sender, DoWorkEventArgs e)
+        {
+            YTPlaylist selected = e.Argument as YTPlaylist;
+            DataStore.StoreData(selected);
+        }
+
+        private void Storeworker_onComplete(object sender, RunWorkerCompletedEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            YTPlaylist selected = PlaylistView.SelectedItem as YTPlaylist;
+
+            AsyncWorker.DoWork(Dataworker_DoWork, Dataworker_onComplete, selected);
+
+            worker.DoWork -= Storeworker_doWork;
+            worker.RunWorkerCompleted -= Storeworker_onComplete;
+            worker.Dispose();
+        }
+
         private void Dataworker_DoWork(object sender, DoWorkEventArgs e)
         {
             string id = e.Argument as string;
@@ -43,7 +79,7 @@ namespace YoutubeGUIWPF
             }
             else
             {
-                //give the user a warning that no playlists with that name exists
+                LocalListView.Template = (ControlTemplate)TryFindResource("FileNotFound");
             }
 
             worker.DoWork -= Dataworker_DoWork;
@@ -102,14 +138,8 @@ namespace YoutubeGUIWPF
             YTplaylistCollection coll = YoutubeApi.GetPlaylists();
             e.Result = coll;
         }
+
         #endregion
 
-        private void PlayListDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            YTPlaylist selected = (YTPlaylist)PlaylistView.SelectedItem;
-
-            AsyncWorker.DoWork(Videoworker_DoWork, Videoworker_onComplete, selected.Id);
-            AsyncWorker.DoWork(Dataworker_DoWork, Dataworker_onComplete, selected.Id);
-        }
     }
 }

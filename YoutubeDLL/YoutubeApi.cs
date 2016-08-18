@@ -10,9 +10,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using Google.Apis.YouTube.v3.Data;
 using Newtonsoft.Json;
-using System.Text;
 using Newtonsoft.Json.Linq;
-using System.Diagnostics;
 
 namespace YoutubeDLL
 {
@@ -75,7 +73,7 @@ namespace YoutubeDLL
         {
             YTplaylistCollection collection = new YTplaylistCollection();
 
-            var request = ytService.Playlists.List("snippet");
+            var request = ytService.Playlists.List("ContentDetails, snippet");
             var nextPageToken = "";
             request.Mine = true;
 
@@ -87,7 +85,7 @@ namespace YoutubeDLL
 
                 foreach (var playlist in response.Items)
                 {
-                    YTPlaylist local = new YTPlaylist(playlist.Snippet.Title, playlist.Id);
+                    YTPlaylist local = new YTPlaylist(playlist.Snippet.Title, playlist.Id, (int)playlist.ContentDetails.ItemCount);
                     collection.Add(local);
                 }
 
@@ -112,7 +110,7 @@ namespace YoutubeDLL
 
                 foreach (var playlist in response.Items)
                 {
-                    YTPlaylist local = new YTPlaylist(playlist.Snippet.Title, playlist.Id);
+                    YTPlaylist local = new YTPlaylist(playlist.Snippet.Title, playlist.Id, (int)playlist.ContentDetails.ItemCount);
                     collection.Add(local);
                 }
 
@@ -192,11 +190,6 @@ namespace YoutubeDLL
             return videos;
         }
 
-    }
-
-    public class EventTest
-    {
-        
     }
 
 }

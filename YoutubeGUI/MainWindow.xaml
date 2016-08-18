@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:YoutubeGUIWPF"
         mc:Ignorable="d"
         Title="youtube PlayList Storage" Height="900" Width="1800">
-    <Grid>
+    <Grid Background="#FF535353">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
             <RowDefinition Height="*"/>
@@ -20,7 +20,7 @@
             <TextBlock 
                 DockPanel.Dock="Left"
                 Text="Youtube Playlist storage" 
-                FontSize="20" 
+                FontSize="22" 
                 VerticalAlignment="Center" 
                 FontWeight="Bold" 
                 Foreground="White" 
@@ -35,15 +35,19 @@
             </Grid.ColumnDefinitions>
 
             <DockPanel Grid.Column="0">
-                <TextBlock DockPanel.Dock="Top" Text="stored playlists" Margin="10" FontSize="16" FontWeight="Bold" />
+                <TextBlock DockPanel.Dock="Top" Text="stored playlists" Margin="10" FontSize="18" FontWeight="Bold" Foreground="#FFFBF9F9" />
 
                 <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0,0,10">
-                    <ListView x:Name="PlaylistView" Height="auto" Background="LightGray" Width="auto" SelectionMode="Single" MouseDoubleClick="PlayListDoubleClick">
+                    <ListView x:Name="PlaylistView" Height="auto" Background="LightGray" Width="auto" SelectionMode="Single" MouseDoubleClick="PlayListDoubleClick" SelectedIndex="0">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <WrapPanel>
+                                <StackPanel>
                                     <TextBlock Text="{Binding Title}" FontSize="16"/>
-                                </WrapPanel>
+                                    <WrapPanel>
+                                        <TextBlock Text="total videos: " FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding VideoCount}" FontSize="12"/>
+                                    </WrapPanel>
+                                </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
@@ -63,7 +67,7 @@
                 </Grid.RowDefinitions>
 
                 <DockPanel Grid.Row="0" Grid.Column="0">
-                    <TextBlock DockPanel.Dock="Top" Text="Playlist on Youtube" FontSize="16" FontWeight="Bold" Margin="10,10,10,0"/>
+                    <TextBlock DockPanel.Dock="Top" Text="Playlist on Youtube" FontSize="18" FontWeight="Bold" Margin="10,10,10,0" Foreground="#FFF7F1F1"/>
 
                     <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <ListView x:Name="UpdateListView" DockPanel.Dock="Top" Background="LightGray" Margin="10">
@@ -81,7 +85,7 @@
                 </DockPanel>
 
                 <DockPanel Grid.Row="0" Grid.Column="1">
-                    <TextBlock DockPanel.Dock="Top" Text="Playlist on Computer" FontSize="16" FontWeight="Bold" Margin="10,10,10,0"/>
+                    <TextBlock DockPanel.Dock="Top" Text="Playlist on Computer" FontSize="18" FontWeight="Bold" Margin="10,10,10,0" Foreground="#FFFBFBFB"/>
 
                     <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <ListView x:Name="LocalListView" Grid.Column="1" Background="LightGray" Margin="0,10,10,10">

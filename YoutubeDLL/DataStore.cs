@@ -10,7 +10,7 @@ namespace YoutubeDLL
     public static class DataStore
     {
 
-        static readonly string DataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "YTPlayListStorage");
+        static readonly string DataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Lucas Spits", "Youtube Playlist Storage");
 
         public static void StoreData(YTPlaylist Playlist)
         {
@@ -53,9 +53,7 @@ namespace YoutubeDLL
             {
                 Directory.CreateDirectory(DataPath);
             }
-            return Path.Combine(DataPath, PlayListId + ".lst");
-
-            
+            return Path.Combine(DataPath, PlayListId + ".lst");    
         }
     }
 }

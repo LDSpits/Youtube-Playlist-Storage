@@ -49,8 +49,26 @@ namespace YoutubeDLL
     {
         private string playlistTitle;
         private string playlistId;
+        private int totalVideos;
         private YTVidList internalVideos;
         
+        [JsonIgnore]
+        public int VideoCount
+        {
+            get
+            {
+                if(internalVideos != null)
+                {
+                    totalVideos = internalVideos.Count;
+                    return internalVideos.Count;
+                }
+                else
+                {
+                    return totalVideos;
+                }
+            }
+        }
+
         [JsonIgnore]
         public string Title
         {
@@ -72,17 +90,19 @@ namespace YoutubeDLL
             set { internalVideos = value; }
         }
 
-        public YTPlaylist(string Title, string Id)
+        public YTPlaylist(string Title, string Id, int count)
         {
             playlistTitle = Title;
             playlistId = Id;
+            totalVideos = count;
             internalVideos = null;
         }
 
-        public YTPlaylist(string Title, string Id, YTVidList Videos)
+        public YTPlaylist(string Title, string Id, int count, YTVidList Videos)
         {
             playlistTitle = Title;
             playlistId = Id;
+            totalVideos = count;
             internalVideos = Videos;
         }
 
@@ -92,6 +112,14 @@ namespace YoutubeDLL
     public class YTVidList
     {
         private List<YTVideo> _list = new List<YTVideo>();
+
+        public int Count
+        {
+            get
+            {
+                return _list.Count;
+            }
+        }
 
         public List<YTVideo> GetCollection()
         {
