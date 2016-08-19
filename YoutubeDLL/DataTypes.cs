@@ -113,6 +113,11 @@ namespace YoutubeDLL
     {
         private List<YTVideo> _list = new List<YTVideo>();
 
+        public static implicit operator List<YTVideo>(YTVidList list)
+        {
+            return list.GetCollection();
+        }
+
         public int Count
         {
             get

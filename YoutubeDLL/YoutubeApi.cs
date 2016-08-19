@@ -69,36 +69,11 @@ namespace YoutubeDLL
         /// <summary>
         /// gets all the playlist's of the currently logged-in user
         /// </summary>
-        public static YTplaylistCollection GetPlaylists()
+        public async static Task<YTplaylistCollection> GetPlaylists()
         {
             YTplaylistCollection collection = new YTplaylistCollection();
 
             var request = ytService.Playlists.List("ContentDetails, snippet");
-            var nextPageToken = "";
-            request.Mine = true;
-
-            while (nextPageToken != null)
-            {
-                request.PageToken = nextPageToken;
-
-                var response = request.Execute();
-
-                foreach (var playlist in response.Items)
-                {
-                    YTPlaylist local = new YTPlaylist(playlist.Snippet.Title, playlist.Id, (int)playlist.ContentDetails.ItemCount);
-                    collection.Add(local);
-                }
-
-                nextPageToken = response.NextPageToken;
-            }
-            return collection;
-        }
-
-        public static async Task<YTplaylistCollection> GetPlaylistsAsync()
-        {
-            YTplaylistCollection collection = new YTplaylistCollection();
-
-            var request = ytService.Playlists.List("snippet");
             var nextPageToken = "";
             request.Mine = true;
 
@@ -124,7 +99,7 @@ namespace YoutubeDLL
         /// </summary>
         /// <param name="playlistname">the name of the playlist to search for</param>
         /// <returns>a video collection with all the videos of the playlist in <see cref="YTVideo"/> format</returns>
-        public static YTVidList GetVideos(string playlistId)
+        public static async Task<YTVidList> GetVideos(string playlistId)
         {
             YTVidList videos = new YTVidList();
 
@@ -138,7 +113,7 @@ namespace YoutubeDLL
                 {
                     request.PageToken = nextPageToken;
 
-                    var response = request.Execute();
+                    var response = await request.ExecuteAsync();
 
                     foreach (var video in response.Items)
                     {

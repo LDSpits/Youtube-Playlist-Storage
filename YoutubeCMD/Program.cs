@@ -8,15 +8,19 @@ namespace YoutubeCMD
     {
         static void Main(string[] args)
         {
-            YTplaylistCollection collection = YoutubeApi.GetPlaylists();
 
-            collection[0].items = YoutubeApi.GetVideos(collection[0].Id);
-
-            DataStore.StoreData(collection[0]);
-
-            //YoutubeApi.logOut();
+            doWork();
+            
             Console.WriteLine("program complete. press enter to exit...");
             Console.Read();
         }
+
+        private static async void doWork()
+        {
+            YTplaylistCollection collection = await YoutubeApi.GetPlaylists();
+            collection[0].items = await YoutubeApi.GetVideos(collection[0].Id);
+            DataStore.StoreData(collection[0]);
+        }
+
     }
 }

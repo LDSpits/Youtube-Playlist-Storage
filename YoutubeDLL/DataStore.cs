@@ -3,7 +3,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Threading.Tasks;
 
 namespace YoutubeDLL
 {
@@ -11,6 +11,11 @@ namespace YoutubeDLL
     {
 
         static readonly string DataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Lucas Spits", "Youtube Playlist Storage");
+
+        public static async void StoreDataAsync(YTPlaylist Playlist)
+        {
+            StoreData(Playlist);
+        }
 
         public static void StoreData(YTPlaylist Playlist)
         {
@@ -29,7 +34,7 @@ namespace YoutubeDLL
 
         public static YTVidList LoadData(string playlistId)
         {
-            YTVidList itemList = new YTVidList();
+            YTVidList itemList;
 
             string file = BuildFilePath(playlistId);
 
@@ -45,6 +50,26 @@ namespace YoutubeDLL
                 throw new FileNotFoundException();
             }
             return itemList;
+        }
+
+        public static async Task<YTVidList> LoadDataAsync(string playlistId)
+        {
+            YTVidList itemlist;
+
+            string file = BuildFilePath(playlistId);
+
+            if (File.Exists(file))
+            {
+                using(StreamReader reader = new StreamReader(file))
+                {
+                    itemlist = JsonConvert.DeserializeObject<YTVidList>(await reader.ReadToEndAsync());
+                }
+            }
+            else
+            {
+                throw new FileNotFoundException();
+            }
+            return itemlist;
         }
 
         private static string BuildFilePath(string PlayListId)
