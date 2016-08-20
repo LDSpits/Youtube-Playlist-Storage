@@ -4,18 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using YoutubeDLL.DataTypes;
 
 namespace YoutubeDLL
 {
     public static class DataStore
     {
-
         static readonly string DataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Lucas Spits", "Youtube Playlist Storage");
-
-        public static async void StoreDataAsync(YTPlaylist Playlist)
-        {
-            StoreData(Playlist);
-        }
 
         public static void StoreData(YTPlaylist Playlist)
         {
@@ -35,7 +30,6 @@ namespace YoutubeDLL
         public static YTVidList LoadData(string playlistId)
         {
             YTVidList itemList;
-
             string file = BuildFilePath(playlistId);
 
             if (File.Exists(file))

@@ -2,11 +2,9 @@
 using System.Windows.Input;
 using YoutubeDLL;
 using System.Windows.Controls;
-using System.ComponentModel;
 using System;
-using System.Windows.Threading;
-using System.Linq;
-using System.Collections;
+using System.Threading.Tasks;
+using YoutubeDLL.DataTypes;
 
 namespace YoutubeGUIWPF
 {
@@ -23,22 +21,19 @@ namespace YoutubeGUIWPF
         {
             InitializeComponent();
             setup();
-            isloading = (ControlTemplate)FindResource("DataLoading");
         }
 
         private async void setup()
         {
-            YTplaylistCollection playCollection = await YoutubeApi.GetPlaylists();
+            isloading = (ControlTemplate)FindResource("DataLoading");
+            YTplaylistColl playCollection = await YoutubeApi.GetPlaylists();
             PlaylistView.ItemsSource = playCollection.GetCollection();
             PlaylistView.Focus();
         }
 
         private void UpdateListView_Loaded(object sender, RoutedEventArgs e)
         {
-            if(UpdateListView.Template == isloading)
-            {
-                prgDownload = isloading.FindName("LoadingBar", UpdateListView) as ProgressBar;
-            }
+            prgDownload = isloading.FindName("LoadingBar", UpdateListView) as ProgressBar;
         }
 
         private async void PlayListDoubleClick(object sender, MouseButtonEventArgs e)
@@ -47,8 +42,8 @@ namespace YoutubeGUIWPF
             LocalListView.ClearValue(ItemsControl.ItemsSourceProperty);
             UpdateListView.ClearValue(ItemsControl.ItemsSourceProperty);
 
-            YTVidList list = await YoutubeApi.GetVideos(selected.Id);
-            UpdateListView.ItemsSource = list.GetCollection();
+            YTVidList VideoList = await YoutubeApi.GetVideos(selected.Id);
+            UpdateListView.ItemsSource = VideoList.GetCollection();
 
             try
             {
@@ -61,9 +56,9 @@ namespace YoutubeGUIWPF
             }
         }
 
-        private void CreateLocal_Click(object sender, MouseButtonEventArgs e)
+        private async void CreateLocal_Click(object sender, MouseButtonEventArgs e)
         {
-            DataStore.StoreDataAsync((YTPlaylist)PlaylistView.SelectedItem);
+            await Task.Run(() => { DataStore.StoreData((YTPlaylist)PlaylistView.SelectedItem); });
         }
 
         private void Videoworker_onProgress(int total, int current)

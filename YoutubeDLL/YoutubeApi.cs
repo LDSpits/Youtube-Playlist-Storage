@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Google.Apis.YouTube.v3.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using YoutubeDLL.DataTypes;
 
 namespace YoutubeDLL
 {
@@ -69,9 +70,9 @@ namespace YoutubeDLL
         /// <summary>
         /// gets all the playlist's of the currently logged-in user
         /// </summary>
-        public async static Task<YTplaylistCollection> GetPlaylists()
+        public async static Task<YTplaylistColl> GetPlaylists()
         {
-            YTplaylistCollection collection = new YTplaylistCollection();
+            YTplaylistColl collection = new YTplaylistColl();
 
             var request = ytService.Playlists.List("ContentDetails, snippet");
             var nextPageToken = "";

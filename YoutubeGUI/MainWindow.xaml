@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:YoutubeGUIWPF"
         mc:Ignorable="d"
-        Title="youtube PlayList Storage" Height="900" Width="1800">
-    <Grid Background="#FF535353">
+        Title="youtube PlayList Storage" Height="900" Width="1800" WindowStartupLocation="CenterScreen" Background="#FF535353">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
             <RowDefinition Height="*"/>
