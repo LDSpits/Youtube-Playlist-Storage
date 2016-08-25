@@ -17,16 +17,17 @@ namespace YoutubeGUIWPF
         ControlTemplate isloading;
         ProgressBar prgDownload;
 
+        //fires on start
         public MainWindow()
         {
-            InitializeComponent();
-            setup();
+            InitializeComponent(); 
+            setup();// setup the back code
         }
 
         private async void setup()
         {
-            isloading = (ControlTemplate)FindResource("DataLoading");
-            YTplaylistColl playCollection = await YoutubeApi.GetPlaylists();
+            isloading = (ControlTemplate)FindResource("DataLoading"); 
+            YTplaylistColl playCollection = await YoutubeApi.GetPlaylists(); 
             PlaylistView.ItemsSource = playCollection.GetCollection();
             PlaylistView.Focus();
         }
@@ -36,6 +37,7 @@ namespace YoutubeGUIWPF
             prgDownload = isloading.FindName("LoadingBar", UpdateListView) as ProgressBar;
         }
 
+        
         private async void PlayListDoubleClick(object sender, MouseButtonEventArgs e)
         {
             YTPlaylist selected = (YTPlaylist)PlaylistView.SelectedItem;
