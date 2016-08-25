@@ -8,10 +8,9 @@ namespace YoutubeCMD
     {
         static void Main(string[] args)
         {
-
             doWork();
             
-            Console.WriteLine("program complete. press enter to exit...");
+            Console.WriteLine("program complete. press any key to exit...");
             Console.Read();
         }
 
