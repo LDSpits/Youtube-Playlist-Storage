@@ -99,14 +99,12 @@ namespace YoutubeDLL
         /// </summary>
         /// <param name="playlistname">the name of the playlist to search for</param>
         /// <returns>a video collection with all the videos of the playlist in <see cref="YTVideo"/> format</returns>
-        public static async Task<YTVidList> GetVideos(string playlistId)
+        public static async Task<YTVidList> GetVideos(YTPlaylist playlist)
         {
             YTVidList videos = new YTVidList();
 
-            if (playlistId != null)
-            {
                 var request = ytService.PlaylistItems.List("snippet");
-                request.PlaylistId = playlistId;
+                request.PlaylistId = playlist.Id;
                 string nextPageToken = "";
 
                 while (nextPageToken != null)
@@ -122,11 +120,6 @@ namespace YoutubeDLL
                     }
                     nextPageToken = response.NextPageToken;
                 }
-            }
-            else
-            {
-                throw new ArgumentException(playlistId, "the playlist searched for does not exist");
-            }
 
             return videos;
         }
@@ -137,7 +130,7 @@ namespace YoutubeDLL
             
             var request = ytService.PlaylistItems.List("snippet");
             request.PlaylistId = playlist.Id;
-            request.MaxResults = (int)Math.Ceiling((decimal)playlist.items.Count / 10);
+            request.MaxResults = (int)Math.Ceiling(playlist.items.Count / 10f);
             string nextPageToken = "";
             int progresspercentage = 0;
 

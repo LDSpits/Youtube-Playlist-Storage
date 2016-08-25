@@ -17,7 +17,7 @@ namespace YoutubeCMD
         private static async void doWork()
         {
             YTplaylistColl collection = await YoutubeApi.GetPlaylists();
-            collection[0].items = await YoutubeApi.GetVideos(collection[0].Id);
+            collection[0].items = await YoutubeApi.GetVideos(collection[0]);
             DataStore.StoreData(collection[0]);
         }
 
