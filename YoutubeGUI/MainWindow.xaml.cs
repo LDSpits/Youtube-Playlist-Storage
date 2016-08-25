@@ -44,7 +44,7 @@ namespace YoutubeGUIWPF
             LocalListView.ClearValue(ItemsControl.ItemsSourceProperty);
             UpdateListView.ClearValue(ItemsControl.ItemsSourceProperty);
 
-            YTVidList VideoList = await YoutubeApi.GetVideos(selected.Id);
+            YTVidList VideoList = await YoutubeApi.GetVideos(selected);
             UpdateListView.ItemsSource = VideoList.GetCollection();
 
             try
