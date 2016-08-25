@@ -29,7 +29,36 @@
                 Margin="10,0,0,0">
             </TextBlock>
         </DockPanel>
-       
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <ListView Grid.Column="0" Margin="10">
+                
+            </ListView>
+
+            <Grid Grid.Column="1" Background="DarkGray">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <Border BorderBrush="Black">
+                    <StackPanel MinWidth="400px" MaxWidth="800" Grid.Row="0" Orientation="Horizontal">
+                        <TextBlock Grid.Row="0" Text="Title: " FontSize="24" Foreground="Aqua" FontWeight="Bold" Margin="10"/>
+                        <TextBlock Grid.Row="0" Text="{Binding videoTitle}" FontSize="24" Foreground="Aqua" Margin="10"/>
+                    </StackPanel>
+                </Border>
+                
+
+            </Grid>
+
+        </Grid>
         
     </Grid>
 </Page>

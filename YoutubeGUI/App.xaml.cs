@@ -13,5 +13,9 @@ namespace YoutubeGUIWPF
     /// </summary>
     public partial class App : Application
     {
+        public void changeView()
+        {
+            App.
+        }
     }
 }

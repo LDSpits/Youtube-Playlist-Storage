@@ -22,6 +22,7 @@ namespace YoutubeGUIWPF
         {
             InitializeComponent(); 
             setup();// setup the back code
+            
         }
 
         private async void setup()
