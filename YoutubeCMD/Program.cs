@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using YoutubeDLL;
+using YoutubeDLL.DataTypes;
 
 namespace YoutubeCMD
 {
@@ -17,7 +17,7 @@ namespace YoutubeCMD
 
         private static async void doWork()
         {
-            YTplaylistCollection collection = await YoutubeApi.GetPlaylists();
+            YTplaylistColl collection = await YoutubeApi.GetPlaylists();
             collection[0].items = await YoutubeApi.GetVideos(collection[0].Id);
             DataStore.StoreData(collection[0]);
         }

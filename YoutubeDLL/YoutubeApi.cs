@@ -81,7 +81,6 @@ namespace YoutubeDLL
             while (nextPageToken != null)
             {
                 request.PageToken = nextPageToken;
-
                 var response = await request.ExecuteAsync();
 
                 foreach (var playlist in response.Items)
@@ -132,35 +131,33 @@ namespace YoutubeDLL
             return videos;
         }
 
-        public static YTVidList GetVideos(string playlistId, DownloadDelegate Callback)
+        public static YTVidList GetVideos(YTPlaylist playlist, IProgress<int> progress)
         {
             YTVidList videos = new YTVidList();
+            
+            var request = ytService.PlaylistItems.List("snippet");
+            request.PlaylistId = playlist.Id;
+            request.MaxResults = (int)Math.Ceiling((decimal)playlist.items.Count / 10);
+            string nextPageToken = "";
+            int progresspercentage = 0;
 
-            if (playlistId != null)
+            while (nextPageToken != null)
             {
-                var request = ytService.PlaylistItems.List("snippet");
-                request.PlaylistId = playlistId;
-                request.MaxResults = 10;
-                string nextPageToken = "";
+                request.PageToken = nextPageToken;
 
-                while (nextPageToken != null)
+                var response = request.Execute();
+
+                foreach (var video in response.Items)
                 {
-                    request.PageToken = nextPageToken;
-
-                    var response = request.Execute();
-
-                    foreach (var video in response.Items)
-                    {
-                        YTVideo realvideo = new YTVideo(video.Snippet.Title, video.Id, false);
-                        videos.Add(realvideo);
-                    }
-                    nextPageToken = response.NextPageToken;
-                    Callback.Invoke((int)response.PageInfo.TotalResults, (int)response.Items.Count);
+                    YTVideo realvideo = new YTVideo(video.Snippet.Title, video.Id, false);
+                    videos.Add(realvideo);
                 }
-            }
-            else
-            {
-                throw new ArgumentException(playlistId, "the playlist searched for does not exist");
+                nextPageToken = response.NextPageToken;
+
+                if(progress != null)
+                {
+                    progress.Report(progresspercentage += 10);
+                } 
             }
 
             return videos;
