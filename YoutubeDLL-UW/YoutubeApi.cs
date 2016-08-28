@@ -1,16 +1,9 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
-using Google.Apis.Util.Store;
 using Google.Apis.YouTube.v3;
 using System;
-using System.IO;
 using System.Threading;
-using YoutubeDLL;
-using System.Collections;
 using System.Threading.Tasks;
-using Google.Apis.YouTube.v3.Data;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using YoutubeDLL.DataTypes;
 
 namespace YoutubeDLL
@@ -26,23 +19,18 @@ namespace YoutubeDLL
 
         private static UserCredential YoutubeCreds = auth();
 
-        private static YouTubeService ytService = (YouTubeService)LaunchService(YoutubeCreds);
+        private static YouTubeService ytService = LaunchService(YoutubeCreds);
 
         private static UserCredential auth()
         {
             UserCredential credentials;
 
-            ClientSecrets secrets = new ClientSecrets();
-            secrets.ClientId = "165704796803-92u17jru4pe62f821srjet338ap9bp5i.apps.googleusercontent.com";
-            secrets.ClientSecret = "N1RAbhCg_AhPq7J3gZnHMZu3";
-
-                credentials = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                secrets,
-                new[] { YouTubeService.Scope.YoutubeReadonly },
-                "user",
-                CancellationToken.None,
-                new FileDataStore("youtubeApi")
-                ).Result;
+            credentials = GoogleWebAuthorizationBroker.AuthorizeAsync(
+            new Uri("ms-appx:YoutubeGUI/Assets/client_secrets.json"),
+            new[] { YouTubeService.Scope.YoutubeReadonly },
+            "user",
+            CancellationToken.None
+            ).Result;
 
             return credentials;
         }

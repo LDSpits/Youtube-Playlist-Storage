@@ -89,6 +89,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="Assets\Client_secret.json" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +133,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\YoutubeDLL-UW\YoutubeDLL-UW.csproj">
+      <Project>{427ae8db-44ef-49fc-977b-76aad1c2ea96}</Project>
+      <Name>YoutubeDLL-UW</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -1,40 +1,40 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using YoutubeDLL.DataTypes;
+using Windows.Storage;
+using Windows.Storage.Streams;
 
 namespace YoutubeDLL
 {
-    public static class DataStore
+    public class DataStore
     {
-        static readonly string DataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Lucas Spits", "Youtube Playlist Storage");
+        static readonly string DataPath = Path.Combine(ApplicationData.Current.LocalFolder.ToString(), "Lucas Spits", "Youtube Playlist Storage");       
 
-        public static void StoreData(YTPlaylist Playlist)
+        public static async void StoreData(YTPlaylist Playlist)
         {
             if(Playlist.items != null)
             {
-                using (StreamWriter Writer = File.CreateText(BuildFilePath(Playlist.Id)))
+                using (StreamWriter Writer = new StreamWriter(await CreateFile(Playlist.Id).Result.OpenStreamForWriteAsync()))
                 {
                     Writer.Write(JsonConvert.SerializeObject(Playlist.items, Formatting.Indented));
                 }
             }
             else
             {
-                throw new ArgumentNullException("the playlist provided does not have a list of videos");
+                throw new ArgumentNullException("The playlist provided does not have a list of videos");
             }
         }
 
-        public static YTVidList LoadData(string playlistId)
+        public async static Task<YTVidList> LoadData(string playlistId)
         {
             YTVidList itemList;
-            string file = BuildFilePath(playlistId);
+            StorageFile file = await getFile(playlistId);
 
-            if (File.Exists(file))
+            if (file != null)
             {
-                using(StreamReader reader = new StreamReader(file))
+                using(StreamReader reader = new StreamReader(await file.OpenStreamForReadAsync()))
                 {
                     itemList = JsonConvert.DeserializeObject<YTVidList>(reader.ReadToEnd());
                 }
@@ -46,33 +46,16 @@ namespace YoutubeDLL
             return itemList;
         }
 
-        public static async Task<YTVidList> LoadDataAsync(string playlistId)
+        private static async Task<StorageFile> getFile(string PlayListId)
         {
-            YTVidList itemlist;
-
-            string file = BuildFilePath(playlistId);
-
-            if (File.Exists(file))
-            {
-                using(StreamReader reader = new StreamReader(file))
-                {
-                    itemlist = JsonConvert.DeserializeObject<YTVidList>(await reader.ReadToEndAsync());
-                }
-            }
-            else
-            {
-                throw new FileNotFoundException();
-            }
-            return itemlist;
+            StorageFolder dataFolder = await StorageFolder.GetFolderFromPathAsync(DataPath);
+            return (StorageFile)await dataFolder.TryGetItemAsync(PlayListId);
         }
 
-        private static string BuildFilePath(string PlayListId)
+        private static async Task<StorageFile> CreateFile(string PlayListId)
         {
-            if(Directory.Exists(DataPath) == false)
-            {
-                Directory.CreateDirectory(DataPath);
-            }
-            return Path.Combine(DataPath, PlayListId + ".lst");    
+            StorageFolder DataFolder = await StorageFolder.GetFolderFromPathAsync(DataPath);
+            return await DataFolder.CreateFileAsync(PlayListId, CreationCollisionOption.OpenIfExists);
         }
     }
 }
