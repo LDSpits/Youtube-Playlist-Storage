@@ -5,6 +5,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using YoutubeDLL.DataTypes;
+using Windows.Security.Authentication.Web;
+using System.Text;
 
 namespace YoutubeDLL
 {
@@ -16,6 +18,7 @@ namespace YoutubeDLL
     /// </summary>
     public class YoutubeApi
     {
+        
 
         private static UserCredential YoutubeCreds = auth();
 
@@ -32,7 +35,20 @@ namespace YoutubeDLL
             CancellationToken.None
             ).Result;
 
+            
+
             return credentials;
+        }
+
+        private static async void Authenticate()
+        {
+            StringBuilder addressbuilder = new StringBuilder();
+            addressbuilder.Append("https://accounts.google.com/o/oauth2/auth?client_id=");
+            addressbuilder.Append("165704796803-92u17jru4pe62f821srjet338ap9bp5i.apps.googleusercontent.com");
+            addressbuilder.Append("");
+
+
+            WebAuthenticationResult result = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, )
         }
 
         private static YouTubeService LaunchService(UserCredential credentials)

@@ -19,6 +19,7 @@ namespace YoutubeCMD
             YTplaylistColl collection = await YoutubeApi.GetPlaylists();
             collection[0].items = await YoutubeApi.GetVideos(collection[0]);
             DataStore.StoreData(collection[0]);
+            YoutubeApi.logOut();
         }
 
     }
