@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using YoutubeDLL;
+using YoutubeDLL.DataTypes;
 
 namespace YoutubeGUI_WPF
 {
@@ -20,9 +22,23 @@ namespace YoutubeGUI_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        GoogleConnection connection = new GoogleConnection();
+        PlaylistCollection online = null;
+
         public MainWindow()
         {
+            init();
+
             InitializeComponent();
+
+            DataView.ItemsSource = (IList<IPlayList>)online;
+        }
+
+        private async void init()
+        {
+            online = await connection.GetPlaylistsAsync();
         }
     }
+
+    
 }

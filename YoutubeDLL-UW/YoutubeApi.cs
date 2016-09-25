@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using YoutubeDLL.DataTypes;
 using Windows.Security.Authentication.Web;
 using System.Text;
+using Auth0.LoginClient;
 
 namespace YoutubeDLL
 {
@@ -18,7 +19,7 @@ namespace YoutubeDLL
     /// </summary>
     public class YoutubeApi
     {
-        
+        private static Auth0User user = Authenticate().Result;
 
         private static UserCredential YoutubeCreds = auth();
 
@@ -33,22 +34,17 @@ namespace YoutubeDLL
             new[] { YouTubeService.Scope.YoutubeReadonly },
             "user",
             CancellationToken.None
-            ).Result;
-
-            
+            ).Result;            
 
             return credentials;
         }
 
-        private static async void Authenticate()
+        private static async Task<Auth0User> Authenticate()
         {
-            StringBuilder addressbuilder = new StringBuilder();
-            addressbuilder.Append("https://accounts.google.com/o/oauth2/auth?client_id=");
-            addressbuilder.Append("165704796803-92u17jru4pe62f821srjet338ap9bp5i.apps.googleusercontent.com");
-            addressbuilder.Append("");
-
-
-            WebAuthenticationResult result = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, )
+            Auth0Client client = new Auth0Client("mrspits4ever.eu.auth0.com", "KXNAikGRLQCXHfd5craT5tc1JvtJ4Lho",DiagnosticsHeader.Suppress);
+            Auth0User user = await client.LoginAsync();
+            Console.WriteLine(user.Auth0AccessToken);
+            return user;
         }
 
         private static YouTubeService LaunchService(UserCredential credentials)
@@ -76,6 +72,9 @@ namespace YoutubeDLL
         /// </summary>
         public async static Task<YTplaylistColl> GetPlaylists()
         {
+
+            
+
             YTplaylistColl collection = new YTplaylistColl();
 
             var request = ytService.Playlists.List("ContentDetails, snippet");

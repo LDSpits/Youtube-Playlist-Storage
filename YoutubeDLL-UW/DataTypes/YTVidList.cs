@@ -61,6 +61,8 @@ namespace YoutubeDLL.DataTypes
             return _list.GetEnumerator();
         }
 
+        
+
         public void UpdateWith(YTVidList updates)
         {
             foreach (YTVideo video in updates)

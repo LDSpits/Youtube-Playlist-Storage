@@ -13,3 +13,12 @@
 3.1: de applicatie toont de lokaal opgeslagen videos van de geselecteerde playlist
 3.2: de applicatie start een updateproces voor de videos
 3.3: de gebruiker kan aangeven of
+
+eerste doel van de gebruiker:
+sneller, beter, leuker met playlists kunnen werken
+
+tweede doel voor de gebruiker:
+FUN!, de gebruiker moet al blij worden als hij de aplicatie opstart.
+het moet leuker en plezieriger zijn om met playlists the werken
+
+

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{05A6A360-692C-474A-829B-57F766392B2F}</ProjectGuid>
+    <ProjectGuid>{A7883C55-9E67-470D-A5FD-04BAC4510CF2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>YoutubeGUI_WPF</RootNamespace>
@@ -94,6 +94,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\YoutubeDLL\YoutubeDLL.csproj">
+      <Project>{192d0637-f58e-46e8-b353-712dd04307a3}</Project>
+      <Name>YoutubeDLL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

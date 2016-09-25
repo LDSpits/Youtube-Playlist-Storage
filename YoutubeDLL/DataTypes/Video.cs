@@ -1,15 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 
 namespace YoutubeDLL.DataTypes
 {
+    public interface IVideo
+    {
+        string Title
+        {
+            get;
+            set;
+        }
+
+        string ID
+        {
+            get;
+            set;
+        }
+
+        bool WasDeleted
+        {
+            get;
+            set;
+        }
+    }
+
     [JsonObject(MemberSerialization = MemberSerialization.Fields)]
-    public class YTVideo
+    public class Video
     {
 
         private string videoTitle;
@@ -24,7 +43,7 @@ namespace YoutubeDLL.DataTypes
         }
 
         [JsonIgnore]
-        public string Id
+        public string ID
         {
             get { return videoID; }
             set { videoID = value; }
@@ -37,7 +56,7 @@ namespace YoutubeDLL.DataTypes
             set { wasDeleted = value; }
         }
 
-        public YTVideo(string VideoTitle, string VideoID, bool Deleted)
+        public Video(string VideoTitle, string VideoID, bool Deleted)
         {
             videoTitle = VideoTitle;
             videoID = VideoID;

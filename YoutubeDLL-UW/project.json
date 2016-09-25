@@ -1,5 +1,7 @@
 ﻿{
   "dependencies": {
+    "Auth0": "3.3.0",
+    "Auth0.Windows.UWP": "1.0.2",
     "Google.Apis.YouTube.v3": "1.16.0.582",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2"
   },
